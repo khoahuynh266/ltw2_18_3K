@@ -1,4 +1,5 @@
-var productTypeModel = require('../models/productType');
+var productTypeModel = require('../models/productType')
+
 exports.create = function (req, res) {
     // Create and Save a new product
     productTypeModel.create(req.body, function (err,data) {

@@ -9,6 +9,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var products = require('./routes/products');
 var productType = require('./routes/productType');
+var login = require('./routes/login');
 var app = express();
 
 // view engine setup
@@ -30,9 +31,11 @@ app.use(function(req, res, next) {
 });
 
 app.use('/', index);
-app.use('/api', users);
+app.use('/users', users);
 app.use('/api', products);
 app.use('/api', productType);
+app.use('/login',login);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
