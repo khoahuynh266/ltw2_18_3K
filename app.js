@@ -26,12 +26,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Headers", "origin, X-Requested-With, content-type, accept, authorization");
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.header("Access-Control-Allow-Methods",  "GET, POST, PUT, DELETE, OPTIONS, HEAD");
     next();
 });
 
 app.use('/', index);
-app.use('/users', users);
+app.use('/api', users);
 app.use('/api', products);
 app.use('/api', productType);
 app.use('/login',login);

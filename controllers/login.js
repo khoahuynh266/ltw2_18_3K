@@ -21,27 +21,26 @@ passport.use(strategy);
 
 
 exports.login = function (req, res) {
- 
-   	LoginModel.findUser(req.body,function (err, data) {
+
+    LoginModel.findUser(req.body,function (err, data) {
             if (err) {
-          
-                res.status(400).send(err);
-                return;
+
+                res.status(401).send(err);
+                return ;
             }
-            if(data[0]!=null)
-            {
-             	 var payload = {email: req.body.email};
-    			var token = jwt.sign(payload, jwtOptions.secretOrKey);
-    			res.json({message: "ok", token: token});
-    			res.status(201).send();
-			}
-            
-			else
-            {
-				res.json({err : "error"});
-                 res.status(400).send();
-             }
-	       }
+            else {
+                if (data) {
+                    var payload = {email: req.body.email};
+                    var token = jwt.sign(payload, jwtOptions.secretOrKey);
+                    res.json({message: "ok", token: token});
+                    res.status(201).send();
+                }
+                else {
+                    res.json({err: "error"});
+                    res.status(400).send();
+                }
+            }
+        }
     );
 
 };

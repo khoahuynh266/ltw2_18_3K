@@ -9,11 +9,11 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.post('/users',           UserController.create);                                                    // C
-router.get('/users', passport.authenticate('jwt', { session: false }), UserController.findAll);        // R
-router.get('/users/:id', passport.authenticate('jwt', { session: false }), UserController.findOne);
+router.post('/users',    UserController.create);                                                    // C
+router.get('/users',  UserController.findAll);        // R
+router.get('/users/:id', UserController.findOne);
  router.put('/users', passport.authenticate('jwt', { session: false }), UserController.update);     // U
- router.delete('/users', passport.authenticate('jwt', { session: false }), UserController.delete);     // D
+ router.delete('/users/:id',  UserController.delete);     // D
 
 
 

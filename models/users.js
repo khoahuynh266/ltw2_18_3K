@@ -10,8 +10,8 @@ exports.create = function(user, callback){
 exports.findOneByEmail = function (email,callback) {
     db.executeQuery("SELECT * FROM `ban_hang`.`users` WHERE email = ?",email, callback);
 }
-exports.delete = function (userId,callback) {
-    db.executeQuery("DELETE FROM `ban_hang`.`users` WHERE id = ? ",userId, callback);
+exports.delete = function (id,callback) {
+    db.executeQuery("DELETE FROM `ban_hang`.`users` WHERE id = ? ",id, callback);
 }
 exports.update = function (user,callback) {
     db.executeQuery("UPDATE `ban_hang`.`users` SET ? WHERE `id` =?;",[user,user.id], callback);
