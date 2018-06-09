@@ -134,9 +134,9 @@ INSERT INTO `nha_san_xuat` (`id`, `ten_nsx`, `diachi`, `email`, `phone`, `images
 (2, 'Oppo', 'Đông Hoản, Trung Quốc', 'service@oppo.vn', '(028)38229844', 'images/Oppo.jpg'),
 (3, 'Apple', 'Cupertino, California', 'support@Apple.com', '358 63 53 47 005', 'images/apple.jpg'),
 (4, 'Sony', 'Minato, Tokyo, Tōkyō, Nhật Bản', 'support@Sony.vn', '180 058 885', 'images/sony.jpg'),
-(5, 'Dell', 'Round Rock, Texas, Hoa Kỳ', 'support@dell.com', '358 11 44 88 000', 'images/Dell/dell.jpg'),
-(6, 'HP', 'Palo Alto, California, Hoa Kỳ', 'support@HP.vn', '1900 555567', 'images/HP/hp.jpg'),
-(7, 'Acer', 'Tân Bắc, Đài Loan', 'support@Acer.com', '351 04 48 80 003', 'images/Acer/acer.jpg');
+(5, 'Dell', 'Round Rock, Texas, Hoa Kỳ', 'support@dell.com', '358 11 44 88 000', 'images/Dell/Dell.jpg'),
+(6, 'HP', 'Palo Alto, California, Hoa Kỳ', 'support@HP.vn', '1900 555567', 'images/HP/Hp.jpg'),
+(7, 'Acer', 'Tân Bắc, Đài Loan', 'support@Acer.com', '351 04 48 80 003', 'images/Acer/Acer.jpg');
 
 -- --------------------------------------------------------
 
