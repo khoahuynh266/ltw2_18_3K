@@ -42,6 +42,7 @@ exports.findOne = function(req, res) {
     });
 };
 
+
 exports.update = function(req, res) {
     // Update a productType identified by the productTypeId in the request
 

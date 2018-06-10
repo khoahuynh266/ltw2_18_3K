@@ -12,6 +12,8 @@ router.get('/products', products.findAll);
 // Retrieve a single Note with noteId
 router.get('/products/:productId', products.findOne);
 
+router.get('/products/:productIdNSX', products.findAllProduct_Type);
+
 // Update a Note with productId
 router.put('/products/:productId', products.update);
 

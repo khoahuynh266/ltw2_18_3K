@@ -9,6 +9,9 @@ exports.create = function(product, callback){
 exports.findOne = function (productId,callback) {
     db.executeQuery("SELECT * FROM `ban_hang`.`san_pham` WHERE id = ?",productId, callback);
 }
+exports.findAllProduct_Type = function (productTypeIdNSX,callback) {
+    db.executeQuery("SELECT * FROM `san_pham` WHERE id_nsx = ?",productIdNSX, callback);
+}
 exports.delete = function (productId,callback) {
     db.executeQuery("DELETE FROM `ban_hang`.`san_pham` WHERE id = ? ",productId, callback);
 }

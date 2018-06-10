@@ -22,6 +22,24 @@ exports.findAll = function (req, res) {
     );
 };
 
+exports.findAllProduct_Type = function(req, res) {
+    // Find a single productType with a productTypeId
+    productModel.findOne(req.params.productIdNSX, function(err, data) {
+        if(err) {
+            console.log(err);
+            if(err.kind === 'ObjectId') {
+                return res.status(404).send({message: "product not found with id " + req.params.productNSXIdNSX});
+            }
+
+            if(!data) {
+                return res.status(404).send({message: "product not found with id " + req.params.productIdNSX});
+            }
+
+        }
+        res.send(data);
+    });
+};
+
 
 exports.findOne = function(req, res) {
     // Find a single products with a productId
