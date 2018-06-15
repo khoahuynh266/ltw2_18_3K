@@ -12,12 +12,16 @@ router.get('/products', products.findAll);
 // Retrieve a single Note with noteId
 router.get('/products/:productId', products.findOne);
 
-router.get('/products/:productIdNSX', products.findAllProduct_Type);
-
 // Update a Note with productId
 router.put('/products/:productId', products.update);
 
 // Delete a Note with productId
 router.delete('/products/:productId', products.delete);
+//DS sp xem nhiều
+router.get('/bestview', products.bestview);
+
+router.get('/newest', products.newest);
+
+router.get('/bestseller', products.bestseller);
 
 module.exports = router;

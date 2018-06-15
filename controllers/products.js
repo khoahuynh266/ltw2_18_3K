@@ -91,3 +91,39 @@ exports.delete = function(req, res) {
         res.send({message: "Note deleted successfully!"});
     });
 }
+
+exports.bestview= function (req, res) {
+    // Retrieve and return all notes from the database.
+    productsModel.bestview(function (err, data) {
+            if (err) {
+                res.status(400).send(err);
+                return;
+            }
+            res.send(data);
+        }
+    );
+};
+
+exports.newest = function (req, res) {
+    // Retrieve and return all notes from the database.
+    productsModel.newest(function (err, data) {
+            if (err) {
+                res.status(400).send(err);
+                return;
+            }
+            res.send(data);
+        }
+    );
+};
+
+exports.bestseller = function (req, res) {
+    // Retrieve and return all notes from the database.
+    productsModel.bestseller(function (err, data) {
+            if (err) {
+                res.status(400).send(err);
+                return;
+            }
+            res.send(data);
+        }
+    );
+};
