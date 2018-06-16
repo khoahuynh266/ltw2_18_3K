@@ -35,3 +35,53 @@ exports.newest = function (callback) {
 exports.bestseller = function (callback) {
     db.executeQuery("select * from san_pham ORDER BY daban DESC limit 10", callback);
 }
+
+
+exports.Search = function(req,callback)
+{
+    var sql;
+    var str;
+    if(!isNaN(req)) // tìm theo giá
+    {
+        sql = "select * from san_pham where gia like N'%"+req+"%'";
+        db.executeQuery(sql, function (err, data){
+            callback(err, data);
+        });
+    }
+    else
+    {   str = decodeURI(req);
+        // theo tên sản phẩm
+        var num_rows = 0;
+        var num_rows1 = 0;
+        sql = "select count(*) as num_rows from san_pham where tensp like N'%"+ str +"%'";
+
+        db.executeQuery(sql,function (err, data){
+            num_rows = data[0].num_rows;
+            sql = "select * from san_pham where tensp like N'%"+ str +"%'";
+            // theo nhà sản xuất
+            if(num_rows===0)
+            {
+                sql = "select count(*) as num_rows from san_pham p , nha_san_xuat n where p.id_nsx = n.id and n.ten_nsx like N'%"+ str +"%'";
+                db.executeQuery(sql, function (err, data){
+                    num_rows1 = data[0].num_rows;
+                });
+                sql = "select * from san_pham p left join nha_san_xuat n on p.id_nsx = n.id where n.ten_nsx like N'%"+ str +"%'";
+
+            }
+            if(num_rows1===1)
+            {
+               sql = "select * from san_pham p , loai_san_pham l where p.loai = l.id and l.ten like '%"+ str +"%'";
+            }
+
+
+            console.log(sql);
+            db.executeQuery(sql, function (err, data){
+                callback(err, data);
+            });
+        });
+    }
+
+
+}
+
+

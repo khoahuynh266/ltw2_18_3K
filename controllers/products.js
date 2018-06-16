@@ -92,6 +92,19 @@ exports.delete = function(req, res) {
     });
 }
 
+exports.Search = function(req,res)
+{
+    var QueryStr =  decodeURI(req.params.QueryStr);
+    productsModel.Search(req.params.QueryStr,function(err,data)
+    {
+        if (err) {
+            res.status(400).send(err);
+            return;
+        }
+        res.send(data);
+    });
+}
+
 exports.bestview= function (req, res) {
     // Retrieve and return all notes from the database.
     productsModel.bestview(function (err, data) {

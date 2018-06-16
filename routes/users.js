@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 router.post('/users',    UserController.create);                                                    // C
 router.get('/users',  UserController.findAll);        // R
 router.get('/users/:id', UserController.findOne);
- router.put('/users', passport.authenticate('jwt', { session: false }), UserController.update);     // U
+ router.put('/users/:id', passport.authenticate('jwt', { session: false }), UserController.update);     // U
  router.delete('/users/:id',  UserController.delete);     // D
 
 

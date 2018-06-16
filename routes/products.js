@@ -24,4 +24,6 @@ router.get('/newest', products.newest);
 
 router.get('/bestseller', products.bestseller);
 
+router.get('/products/search/:QueryStr',products.Search);
+
 module.exports = router;

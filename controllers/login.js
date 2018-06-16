@@ -18,21 +18,26 @@ var strategy = new JwtStrategy(jwtOptions, function (jwt_payload, next) {
 });
 
 passport.use(strategy);
+var permission = null;
+var id = null;
 
 
 exports.login = function (req, res) {
 
     LoginModel.findUser(req.body,function (err, data) {
             if (err) {
-
                 res.status(401).send(err);
                 return ;
             }
             else {
                 if (data) {
+                    permission = data[0].type;
+                    id = data[0].id;
+
                     var payload = {email: req.body.email};
                     var token = jwt.sign(payload, jwtOptions.secretOrKey);
                     res.json({message: "ok", token: token});
+                    console.log(token);
                     res.status(201).send();
                 }
                 else {
@@ -46,5 +51,6 @@ exports.login = function (req, res) {
 };
 
 exports.secret = function(req,res){
-    res.json("Success! You can not see this without a token");
+    res.json({permission : permission ,id: id});
+    res.status(200).send();
 };

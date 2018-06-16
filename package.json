@@ -12,7 +12,7 @@
     "debug": "~2.6.9",
     "express": "^4.15.5",
     "hbs": "~4.0.1",
-    "jsonwebtoken": "^8.2.1",
+    "jsonwebtoken": "^8.2.2",
     "jwt-simple": "^0.5.1",
     "morgan": "~1.9.0",
     "mysql": "^2.15.0",
@@ -24,5 +24,13 @@
   "author": "",
   "license": "ISC",
   "description": "do an web",
-  "devDependencies": {}
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khoahuynh266/ltw2_18_3K.git"
+  },
+  "bugs": {
+    "url": "https://github.com/khoahuynh266/ltw2_18_3K/issues"
+  },
+  "homepage": "https://github.com/khoahuynh266/ltw2_18_3K#readme"
 }
