@@ -32,4 +32,11 @@ router.get('/products/totalPage/', products.getTotalPage);
 
 router.get('/products/Producer/:id_nsx', products.getProductsByProducer)
 
+//lấy 5 sp theo nsx
+router.get('/products/5productSamProducer/:producerID', products.productSamProducer);
+//lấy 5 sp theo loại
+router.get('/products/5productSamType/:typeID', products.productSamType);
+// tăng lượt xem
+router.get('/products/UpdateView/:id', products.UpdateView);
+
 module.exports = router;

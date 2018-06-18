@@ -11,7 +11,7 @@ exports.create = function(product, callback){
 }
 
 exports.findOne = function (productId,callback) {
-    db.executeQuery("SELECT * FROM `ban_hang`.`san_pham` s, nha_san_xuat n WHERE s.id_nsx = n.id and id = ?",productId, callback);
+    db.executeQuery("SELECT * FROM `ban_hang`.`san_pham` s, nha_san_xuat n WHERE s.id_nsx = n.id and s.id = ?",productId, callback);
 }
 
 exports.getProductsByProducer = function (id_nsx,callback) {
@@ -48,6 +48,18 @@ exports.getProductPage = function (pageNumber,callback) {
 exports.getTotalPage = function (callback) {
     db.executeQuery("select count(*) from san_pham ", callback);
 }
+exports.productSamType = function (typeID,callback) {
+    db.executeQuery("select *  from san_pham where loai = ? limit 5",typeID, callback);
+}
+exports.productSamProducer= function (producerID,callback) {
+    db.executeQuery("select * from san_pham where id_nsx = ? limit 5",producerID, callback);
+}
+
+exports.UpdateView = function(req,callback)
+{
+    db.executeQuery("Update san_pham set luotxem = luotxem + 1 where id = ?",req,callback);
+}
+
 exports.Search = function(req,callback)
 {
     var sql;

@@ -172,3 +172,60 @@ exports.getProductPage = function(req, res) {
     });
 };
 
+
+exports.productSamType = function(req, res) {
+    // Find a single products with a productId
+    productsModel.productSamType(req.params.typeID, function(err, data) {
+        if(err) {
+            console.log(err);
+            if(err.kind === 'ObjectId') {
+                return res.status(404).send({message: "products not found with id " + req.params.typeID});
+            }
+
+            if(!data) {
+                return res.status(404).send({message: "products not found with id " + req.params.typeID});
+            }
+
+        }
+        res.send(data);
+    });
+};
+
+
+exports.productSamProducer = function(req, res) {
+    // Find a single products with a productId
+    productsModel.productSamProducer(req.params.producerID, function(err, data) {
+        if(err) {
+            console.log(err);
+            if(err.kind === 'ObjectId') {
+                return res.status(404).send({message: "products not found with id " + req.params.producerID});
+            }
+
+            if(!data) {
+                return res.status(404).send({message: "products not found with id " + req.params.producerID});
+            }
+
+        }
+        res.send(data);
+    });
+};
+
+
+exports.UpdateView = function(req, res) {
+    // Find a single products with a productId
+    productsModel.UpdateView(req.params.id, function(err, data) {
+        if(err) {
+            console.log(err);
+            if(err.kind === 'ObjectId') {
+                return res.status(404).send({message: "products not found with id " + req.params.id});
+            }
+
+            if(!data) {
+                return res.status(404).send({message: "products not found with id " + req.params.id});
+            }
+
+        }
+        res.send(data);
+    });
+};
+
