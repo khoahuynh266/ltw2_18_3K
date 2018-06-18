@@ -29,4 +29,7 @@ router.get('/products/search/:QueryStr',products.Search);
 router.get('/products/page/:pageNumber', products.getProductPage);
 
 router.get('/products/totalPage/', products.getTotalPage);
+
+router.get('/products/Producer/:id_nsx', products.getProductsByProducer)
+
 module.exports = router;

@@ -22,17 +22,17 @@ exports.findAll = function (req, res) {
     );
 };
 
-exports.findAllProduct_Type = function(req, res) {
-    // Find a single productType with a productTypeId
-    productModel.findOne(req.params.productIdNSX, function(err, data) {
+exports.getProductsByProducer = function(req, res) {
+    // Find a single products with a productId
+    productsModel.getProductsByProducer(req.params.id_nsx, function(err, data) {
         if(err) {
             console.log(err);
             if(err.kind === 'ObjectId') {
-                return res.status(404).send({message: "product not found with id " + req.params.productNSXIdNSX});
+                return res.status(404).send({message: "products not found with id " + req.params.id_nsx});
             }
 
             if(!data) {
-                return res.status(404).send({message: "product not found with id " + req.params.productIdNSX});
+                return res.status(404).send({message: "products not found with id " + req.params.id_nsx});
             }
 
         }
@@ -171,3 +171,4 @@ exports.getProductPage = function(req, res) {
         res.send(data);
     });
 };
+

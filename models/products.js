@@ -11,11 +11,11 @@ exports.create = function(product, callback){
 }
 
 exports.findOne = function (productId,callback) {
-    db.executeQuery("SELECT * FROM `ban_hang`.`san_pham` WHERE id = ?",productId, callback);
+    db.executeQuery("SELECT * FROM `ban_hang`.`san_pham` s, nha_san_xuat n WHERE s.id_nsx = n.id and id = ?",productId, callback);
 }
 
-exports.findAllProduct_Type = function (productTypeIdNSX,callback) {
-    db.executeQuery("SELECT * FROM `san_pham` WHERE id_nsx = ?",productIdNSX, callback);
+exports.getProductsByProducer = function (id_nsx,callback) {
+    db.executeQuery("SELECT * FROM `san_pham` WHERE id_nsx = ?",id_nsx, callback);
 }
 
 exports.delete = function (productId,callback) {
@@ -46,9 +46,8 @@ exports.getProductPage = function (pageNumber,callback) {
 }
 
 exports.getTotalPage = function (callback) {
-    db.executeQuery("select count(*) as num from san_pham ", callback);
+    db.executeQuery("select count(*) from san_pham ", callback);
 }
-
 exports.Search = function(req,callback)
 {
     var sql;
@@ -95,5 +94,6 @@ exports.Search = function(req,callback)
 
 
 }
+
 
 
