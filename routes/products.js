@@ -26,4 +26,7 @@ router.get('/bestseller', products.bestseller);
 
 router.get('/products/search/:QueryStr',products.Search);
 
+router.get('/products/page/:pageNumber', products.getProductPage);
+
+router.get('/products/totalPage/', products.getTotalPage);
 module.exports = router;

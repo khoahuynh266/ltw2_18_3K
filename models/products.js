@@ -3,7 +3,9 @@ var db = require('./manageDB');
 exports.findAll = function (callback) {
     db.executeQuery("select * from san_pham", callback);
 }
-
+exports.GetNumItems  = function (callback) {
+    db.executeQuery("select * from san_pham", callback);
+}
 exports.create = function(product, callback){
     db.executeQuery("INSERT INTO `ban_hang`.`san_pham` SET ?", product, callback);
 }
@@ -35,7 +37,17 @@ exports.newest = function (callback) {
 exports.bestseller = function (callback) {
     db.executeQuery("select * from san_pham ORDER BY daban DESC limit 10", callback);
 }
+exports.getProductPage = function (pageNumber,callback) {
+    var next_page = pageNumber + 1;
+    var prev_page = pageNumber - 1;
+    var limit = 15;
+    var offset = (pageNumber - 1) * limit;
+    db.executeQuery("select * from san_pham limit ? , ? ",[offset,limit], callback);
+}
 
+exports.getTotalPage = function (callback) {
+    db.executeQuery("select count(*) as num from san_pham ", callback);
+}
 
 exports.Search = function(req,callback)
 {

@@ -140,3 +140,34 @@ exports.bestseller = function (req, res) {
         }
     );
 };
+
+exports.getTotalPage = function(req,res)
+{
+    productsModel.getTotalPage(function (err, data) {
+            if (err) {
+                res.status(400).send(err);
+                return;
+            }
+            var totalPage = data[0].value;
+            res.send(data);
+        }
+    );
+}
+
+exports.getProductPage = function(req, res) {
+    // Find a single products with a productId
+    productsModel.getProductPage(req.params.pageNumber, function(err, data) {
+        if(err) {
+            console.log(err);
+            if(err.kind === 'ObjectId') {
+                return res.status(404).send({message: "products not found with id " + req.params.productId});
+            }
+
+            if(!data) {
+                return res.status(404).send({message: "products not found with id " + req.params.productId});
+            }
+
+        }
+        res.send(data);
+    });
+};
