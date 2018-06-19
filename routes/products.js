@@ -2,9 +2,10 @@ var express = require('express');
 var router = express.Router();
 
 var products = require('../controllers/products');
+var passport = require('passport');
 
 // Create a new Note
-router.post('/products', products.create);
+router.post('/products',passport.authenticate('jwt', {session: false}), products.create);
 
 // Retrieve all products
 router.get('/products', products.findAll);
@@ -13,10 +14,10 @@ router.get('/products', products.findAll);
 router.get('/products/:productId', products.findOne);
 
 // Update a Note with productId
-router.put('/products/:productId', products.update);
+router.put('/products/:productId',passport.authenticate('jwt', {session: false}), products.update);
 
 // Delete a Note with productId
-router.delete('/products/:productId', products.delete);
+router.delete('/products/:productId',passport.authenticate('jwt', {session: false}), products.delete);
 //DS sp xem nhiều
 router.get('/bestview', products.bestview);
 
