@@ -12,6 +12,7 @@ var productType = require('./routes/productType');
 var Producer = require('./routes/Producer');
 var login = require('./routes/login');
 var app = express();
+var OderList = require('./routes/OderList');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -39,6 +40,7 @@ app.use('/api', products);
 app.use('/api', productType);
 app.use('/api', Producer);
 app.use('/login',login);
+app.use('/api', OderList);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
