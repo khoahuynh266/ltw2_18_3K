@@ -42,7 +42,7 @@ exports.getProductsByProducer = function(req, res) {
 
 exports.getProductsByProductType = function(req, res) {
     // Find a single products with a productId
-    productsModel.getProductsByProducer(req.params.id_type, function(err, data) {
+    productsModel.getProductsByProductType(req.params.id_type, function(err, data) {
         if(err) {
             console.log(err);
             if(err.kind === 'ObjectId') {
