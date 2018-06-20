@@ -17,7 +17,7 @@ router.get('/products/:productId', products.findOne);
 router.put('/products/:productId',passport.authenticate('jwt', {session: false}), products.update);
 
 // Delete a Note with productId
-router.delete('/products/:productId',passport.authenticate('jwt', {session: false}), products.delete);
+router.delete('/products/:productId',products.delete);
 //DS sp xem nhiều
 router.get('/bestview', products.bestview);
 
@@ -32,8 +32,6 @@ router.get('/products/page/:pageNumber', products.getProductPage);
 router.get('/products/totalPage/', products.getTotalPage);
 
 router.get('/products/Producer/:id_nsx', products.getProductsByProducer)
-
-router.get('/products/ProductType/:id_type', products.getProductsByProductType)
 
 //lấy 5 sp theo nsx
 router.get('/products/5productSamProducer/:producerID', products.productSamProducer);

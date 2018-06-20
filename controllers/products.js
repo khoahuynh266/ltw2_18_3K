@@ -28,11 +28,11 @@ exports.getProductsByProducer = function(req, res) {
         if(err) {
             console.log(err);
             if(err.kind === 'ObjectId') {
-                return res.status(404).send({message: "producer not found with id " + req.params.id_nsx});
+                return res.status(404).send({message: "products not found with id " + req.params.id_nsx});
             }
 
             if(!data) {
-                return res.status(404).send({message: "producer not found with id " + req.params.id_nsx});
+                return res.status(404).send({message: "products not found with id " + req.params.id_nsx});
             }
 
         }
@@ -40,23 +40,6 @@ exports.getProductsByProducer = function(req, res) {
     });
 };
 
-exports.getProductsByProductType = function(req, res) {
-    // Find a single products with a productId
-    productsModel.getProductsByProductType(req.params.id_type, function(err, data) {
-        if(err) {
-            console.log(err);
-            if(err.kind === 'ObjectId') {
-                return res.status(404).send({message: "ProductType not found with id " + req.params.id_type});
-            }
-
-            if(!data) {
-                return res.status(404).send({message: "ProductType not found with id " + req.params.id_type});
-            }
-
-        }
-        res.send(data);
-    });
-};
 
 exports.findOne = function(req, res) {
     // Find a single products with a productId

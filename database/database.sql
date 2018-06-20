@@ -2,10 +2,10 @@
 -- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jun 20, 2018 at 06:56 AM
--- Server version: 10.1.28-MariaDB
--- PHP Version: 7.1.10
+-- Host: 127.0.0.1:3306
+-- Generation Time: Jan 09, 2018 at 04:42 AM
+-- Server version: 5.7.19
+-- PHP Version: 5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -28,22 +28,16 @@ SET time_zone = "+00:00";
 -- Table structure for table `chi_tiet_don_hang`
 --
 
-CREATE TABLE `chi_tiet_don_hang` (
-  `id_donhang` int(11) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `chi_tiet_don_hang`;
+CREATE TABLE IF NOT EXISTS `chi_tiet_don_hang` (
+  `id_donhang` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `id_sanpham` int(11) UNSIGNED NOT NULL,
   `soluong` int(11) NOT NULL COMMENT 'số lượng',
   `giaban` double NOT NULL,
-  `giatien` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `chi_tiet_don_hang`
---
-
-INSERT INTO `chi_tiet_don_hang` (`id_donhang`, `id_sanpham`, `soluong`, `giaban`, `giatien`) VALUES
-(1, 1, 1, 22490000, 22490000),
-(2, 2, 1, 20490000, 20490000),
-(3, 3, 1, 18490000, 18490000);
+  `giatien` int(11) NOT NULL,
+  PRIMARY KEY (`id_donhang`,`id_sanpham`) USING BTREE,
+  KEY `id_sanpham` (`id_sanpham`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -51,23 +45,17 @@ INSERT INTO `chi_tiet_don_hang` (`id_donhang`, `id_sanpham`, `soluong`, `giaban`
 -- Table structure for table `don_hang`
 --
 
-CREATE TABLE `don_hang` (
-  `id` int(11) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `don_hang`;
+CREATE TABLE IF NOT EXISTS `don_hang` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `id_nguoidung` int(11) UNSIGNED NOT NULL,
   `tongsp` int(11) DEFAULT NULL COMMENT 'tổng số sản phẩm',
   `tongtien` int(11) DEFAULT NULL COMMENT 'tổng giá trị',
   `trangthai` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `don_hang`
---
-
-INSERT INTO `don_hang` (`id`, `id_nguoidung`, `tongsp`, `tongtien`, `trangthai`, `created_at`) VALUES
-(1, 2, 1, 90000000, 0, '2017-12-26 03:00:00'),
-(2, 2, 1, 1000000, 2, '2018-12-26 02:30:00'),
-(3, 4, 1, 8500000, 1, '2018-06-20 04:55:43');
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `id_nguoidung` (`id_nguoidung`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -75,14 +63,18 @@ INSERT INTO `don_hang` (`id`, `id_nguoidung`, `tongsp`, `tongtien`, `trangthai`,
 -- Table structure for table `gio_hang`
 --
 
-CREATE TABLE `gio_hang` (
-  `id` int(11) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `gio_hang`;
+CREATE TABLE IF NOT EXISTS `gio_hang` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `id_nguoidung` int(11) UNSIGNED NOT NULL,
   `id_sanpham` int(11) UNSIGNED NOT NULL,
   `soluong` int(11) NOT NULL,
   `tinhtrang` int(11) NOT NULL DEFAULT '0',
-  `tinhtrangdonhang` int(11) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
+  `tinhtrangdonhang` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `id_nguoidung` (`id_nguoidung`),
+  KEY `id_sanpham` (`id_sanpham`)
+) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
 
 --
 -- Dumping data for table `gio_hang`
@@ -100,10 +92,12 @@ INSERT INTO `gio_hang` (`id`, `id_nguoidung`, `id_sanpham`, `soluong`, `tinhtran
 -- Table structure for table `loai_san_pham`
 --
 
-CREATE TABLE `loai_san_pham` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `ten_loai` varchar(100) CHARACTER SET utf8 NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
+DROP TABLE IF EXISTS `loai_san_pham`;
+CREATE TABLE IF NOT EXISTS `loai_san_pham` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `ten_loai` varchar(100) CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
 
 --
 -- Dumping data for table `loai_san_pham`
@@ -120,14 +114,16 @@ INSERT INTO `loai_san_pham` (`id`, `ten_loai`) VALUES
 -- Table structure for table `nha_san_xuat`
 --
 
-CREATE TABLE `nha_san_xuat` (
-  `id` int(11) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `nha_san_xuat`;
+CREATE TABLE IF NOT EXISTS `nha_san_xuat` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `ten_nsx` varchar(50) CHARACTER SET utf8 NOT NULL,
   `diachi` varchar(100) CHARACTER SET utf8 NOT NULL,
   `email` text CHARACTER SET utf8,
   `phone` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `images` varchar(256) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `images` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `nha_san_xuat`
@@ -138,9 +134,9 @@ INSERT INTO `nha_san_xuat` (`id`, `ten_nsx`, `diachi`, `email`, `phone`, `images
 (2, 'Oppo', 'Đông Hoản, Trung Quốc', 'service@oppo.vn', '(028)38229844', 'images/Oppo.jpg'),
 (3, 'Apple', 'Cupertino, California', 'support@Apple.com', '358 63 53 47 005', 'images/apple.jpg'),
 (4, 'Sony', 'Minato, Tokyo, Tōkyō, Nhật Bản', 'support@Sony.vn', '180 058 885', 'images/sony.jpg'),
-(5, 'Dell', 'Round Rock, Texas, Hoa Kỳ', 'support@dell.com', '358 11 44 88 000', 'images/Dell/dell.jpg'),
-(6, 'HP', 'Palo Alto, California, Hoa Kỳ', 'support@HP.vn', '1900 555567', 'images/HP/hp.jpg'),
-(7, 'Acer', 'Tân Bắc, Đài Loan', 'support@Acer.com', '351 04 48 80 003', 'images/Acer/acer.jpg');
+(5, 'Dell', 'Round Rock, Texas, Hoa Kỳ', 'support@dell.com', '358 11 44 88 000', 'images/Dell/Dell.jpg'),
+(6, 'HP', 'Palo Alto, California, Hoa Kỳ', 'support@HP.vn', '1900 555567', 'images/HP/Hp.jpg'),
+(7, 'Acer', 'Tân Bắc, Đài Loan', 'support@Acer.com', '351 04 48 80 003', 'images/Acer/Acer.jpg');
 
 -- --------------------------------------------------------
 
@@ -148,8 +144,9 @@ INSERT INTO `nha_san_xuat` (`id`, `ten_nsx`, `diachi`, `email`, `phone`, `images
 -- Table structure for table `san_pham`
 --
 
-CREATE TABLE `san_pham` (
-  `id` int(11) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `san_pham`;
+CREATE TABLE IF NOT EXISTS `san_pham` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `tensp` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `loai` int(11) UNSIGNED NOT NULL,
   `id_nsx` int(11) UNSIGNED NOT NULL,
@@ -160,15 +157,18 @@ CREATE TABLE `san_pham` (
   `xuatsu` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `luotxem` int(11) NOT NULL,
-  `daban` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `daban` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `loai` (`loai`),
+  KEY `id_nsx` (`id_nsx`)
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `san_pham`
 --
 
 INSERT INTO `san_pham` (`id`, `tensp`, `loai`, `id_nsx`, `gia`, `soluong`, `mota`, `image`, `xuatsu`, `created_at`, `luotxem`, `daban`) VALUES
-(1, 'Điện thoại Samsung Galaxy Note 8', 1, 1, 22490000, 100, 'Galaxy Note 8 là niềm hy vọng vực lại dòng Note danh tiếng của Samsung với diện mạo nam tính, sang trọng. Trang bị camera kép xóa phông thời thượng, màn hình vô cực như trên S8 Plus, bút Spen với nhiều tính năng mới và nhiều công nghệ được Samsung ưu ái đem lên Note 8.', 'images/1.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1240, 0),
+(1, 'Điện thoại Samsung Galaxy Note 8', 1, 1, 22490000, 100, 'Galaxy Note 8 là niềm hy vọng vực lại dòng Note danh tiếng của Samsung với diện mạo nam tính, sang trọng. Trang bị camera kép xóa phông thời thượng, màn hình vô cực như trên S8 Plus, bút Spen với nhiều tính năng mới và nhiều công nghệ được Samsung ưu ái đem lên Note 8.', 'images/1.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1234, 0),
 (2, 'Điện thoại Samsung Galaxy S8 Plus', 1, 1, 20490000, 100, 'Galaxy S8 và S8 Plus hiện đang là chuẩn mực smartphone về thiết kế trong tương lai', 'images/2.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1234, 0),
 (3, 'Điện thoại Samsung Galaxy S8', 1, 1, 18490000, 100, 'Galaxy S8 và S8 Plus hiện đang là chuẩn mực smartphone về thiết kế trong tương lai', 'images/3.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1234, 0),
 (4, 'Điện thoại Samsung Galaxy Note FE', 1, 1, 13990000, 100, 'Đúng như tên gọi, Samsung Galaxy Note FE (Fan Edition) được ra mắt dành cho các fan trung thành của dòng sản phẩm này, thuộc phân khúc cao cấp, Note FE trang bị những tính năng hàng đầu, giá tốt', 'images/4.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1234, 0),
@@ -178,13 +178,13 @@ INSERT INTO `san_pham` (`id`, `tensp`, `loai`, `id_nsx`, `gia`, `soluong`, `mota
 (8, 'Điện thoại Samsung Galaxy C9 Pro', 1, 1, 9990000, 100, 'Samsung Galaxy C9 Pro gây được sự chú ý cho người dùng bởi nó sở hữu mức RAM lên tới 6 GB, lần đầu tiên có một chiếc Galaxy đến từ Samsung sở hữu mức RAM đó', 'images/8.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1234, 0),
 (9, 'Điện thoại Samsung Galaxy J7+', 1, 1, 8690000, 100, 'Samsung Galaxy J7+ là dòng smartphone tầm trung nhưng được trang bị camera kép có khả năng chụp ảnh xóa phông chân dung cùng thiết kế đẹp và hiệu năng mạnh mẽ', 'images/9.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1234, 0),
 (10, 'Điện thoại Samsung Galaxy A5 (2017)', 1, 1, 7990000, 100, 'Đẳng cấp, sang trọng, dẫn đầu xu thế là những từ ngữ chuẩn xác để miêu tả về điện thoại Samsung Galaxy A5(2017)', 'images/10.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1234, 0),
-(11, 'Điện thoại Oppo F5', 1, 2, 6990000, 100, 'OPPO F5, chuyên gia selfie mới nổi bật với màn hình tràn cạnh thời trang và camera tích hợp trí tuệ nhân tạo AI để càng chụp càng đẹp', 'images/11.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1240, 0),
+(11, 'Điện thoại Oppo F5', 1, 2, 6990000, 100, 'OPPO F5, chuyên gia selfie mới nổi bật với màn hình tràn cạnh thời trang và camera tích hợp trí tuệ nhân tạo AI để càng chụp càng đẹp', 'images/11.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1234, 0),
 (12, 'Điện thoại OPPO F3 Plus', 1, 2, 10690000, 100, 'Sau sự thành công của F1 Plus, OPPO F3 Plus đang được người dùng quan tâm yêu thích với cụm camera selfie kép, công nghệ chụp thiếu sáng đỉnh cao, cấu hình mạnh mẽ và tất nhiên đó là thiết kế nguyên khối quá ư là sang trọng', 'images/12.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1234, 0),
 (13, 'Điện thoại OPPO F5 6GB', 1, 2, 8990000, 100, 'OPPO F5 6GB là phiên bản nâng cấp cấu hình của chiếc OPPO F5, chuyên gia selfie làm đẹp thông minh và màn hình tràn viền tuyệt đẹp', 'images/13.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1234, 0),
 (14, 'Điện thoại OPPO F5 Youth', 1, 2, 6190000, 100, 'OPPO F5 Youth, phiên bản giá rẻ của chuyên gia selfie, màn hình tràn cạnh OPPO F5 với thiết kế và tính năng hoàn toàn tương đương nhưng thông số cấu mình phần cứng kém hơn một chút', 'images/14.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1234, 0),
 (15, 'Điện thoại OPPO F3 Lite (A57)', 1, 2, 5490000, 100, 'OPPO A57 là phiên bản rút gọn của Oppo F1s có mức giá dễ chịu hơn nhưng vẫn cho những trải nghiệm gần như tương đương', 'images/15.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1234, 0),
 (16, 'Điện thoại iPhone X 256GB', 1, 3, 34790000, 100, 'iPhone X mang trên mình thiết kế hoàn toàn mới với màn hình Super Retina viền cực mỏng và trang bị nhiều công nghệ hiện đại như nhận diện khuôn mặt Face ID, sạc pin nhanh và sạc không dây cùng khả năng chống nước bụi cao cấp', 'images/16.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1234, 0),
-(17, 'Điện thoại iPhone X 64GB', 1, 3, 29990000, 100, '\"iPhone X giá\" là cụm từ được rất nhiều người mong chờ và tìm kiếm trên Google bởi đây là chiếc điện thoại mà Apple kỉ niệm 10 năm iPhone đầu tiên được bán ra', 'images/17.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1235, 0),
+(17, 'Điện thoại iPhone X 64GB', 1, 3, 29990000, 100, '\"iPhone X giá\" là cụm từ được rất nhiều người mong chờ và tìm kiếm trên Google bởi đây là chiếc điện thoại mà Apple kỉ niệm 10 năm iPhone đầu tiên được bán ra', 'images/17.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1234, 0),
 (18, 'Điện thoại iPhone 8 Plus 256GB', 1, 3, 28790000, 100, 'iPhone 8 Plus là bản nâng cấp nhẹ của chiếc iPhone 7 Plus đã ra mắt trước đó với cấu hình mạnh mẽ cùng camera có nhiều cải tiến', 'images/18.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1234, 0),
 (19, 'Điện thoại iPhone 8 256GB', 1, 3, 25790000, 100, 'iPhone 8 là bản nâng cấp nhẹ của chiếc iPhone 7 đã ra mắt trước đó với cấu hình mạnh mẽ cùng camera có nhiều cải tiến', 'images/19.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1234, 0),
 (20, 'Điện thoại iPhone 8 Plus 64GB', 1, 3, 23990000, 200, 'Thừa hưởng thiết kế đã đạt đến độ chuẩn mực, thế hệ iPhone 8 Plus thay đổi phong cách bóng bẩy hơn và bổ sung hàng loạt tính năng cao cấp cho trải nghiệm sử dụng vô cùng tuyệt vờ', 'images/20.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1234, 0),
@@ -208,7 +208,7 @@ INSERT INTO `san_pham` (`id`, `tensp`, `loai`, `id_nsx`, `gia`, `soluong`, `mota
 (38, 'Điện thoại Sony Xperia XA1 Ultra', 1, 4, 8490000, 200, 'Kế nhiệm sự thành công của phablet không viền Sony Xperia XA Ultra thì Sony giới thiệu phiên bản XA1 Ultra với nhiều cải tiến đáng giá.', 'images/38.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1234, 0),
 (39, 'Điện thoại Sony Xperia XA1 Ultra Pink', 1, 3, 7490000, 200, 'Sau một thời gian xuất hiện tại Việt Nam và nhận được nhiều sự quan tâm từ người dùng thì mới đây Sony đã tung ra phiên bản màu hồng cho chiếc Sony Xperia XA1 Ultra để phục vụ riêng cho \"phái đẹp\".', 'images/39.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1234, 0),
 (40, 'Điện thoại Sony Xperia X', 1, 3, 7490000, 200, 'Sony vừa giới thiệu dòng sản phẩm X Serie mới của hãng trong năm 2016 tại triển lãm MWC. Xperia X là chiếc smartphone tầm trung mới với nhiều điểm nhấn đáng chú ý.', 'images/40.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1234, 0),
-(41, 'Máy tính bảng Samsung Galaxy Book 10.6 inch', 3, 1, 19990000, 400, 'Samsung Galaxy Book 10.6 inch là mẫu tablet 2 trong 1 chạy trên nền tảng Windows 10 nhưng vẫn sở hữu cho mình cây bút Spen thần thánh.', 'images/41.jpg', 'Việt Nam', '0000-00-00 00:00:00', 59, 0),
+(41, 'Máy tính bảng Samsung Galaxy Book 10.6 inch', 3, 1, 19990000, 400, 'Samsung Galaxy Book 10.6 inch là mẫu tablet 2 trong 1 chạy trên nền tảng Windows 10 nhưng vẫn sở hữu cho mình cây bút Spen thần thánh.', 'images/41.jpg', 'Việt Nam', '0000-00-00 00:00:00', 56, 0),
 (42, 'Máy tính bảng Samsung Galaxy Tab A6 10.1 Spen', 3, 1, 7990000, 100, 'Tiếp nối sự thành công của chiếc Samsung Galaxy Tab A thì mới đây Samsung đã giới thiệu phiên bản cải tiến là chiếc Galaxy Tab A6 10.1 với nhiều nâng cấp đáng giá về cấu hình và thiết kế.', 'images/42.jpg', 'Việt Nam', '2017-12-26 10:00:00', 54, 0),
 (43, 'Máy tính bảng Samsung Galaxy Tab A 8.0 (2017)', 3, 1, 6490000, 100, 'Samsung Galaxy Tab A 8.0 (2017) mới có màn hình tỉ lệ 4:3 với không gian hiển thị rộng thông minh cho người dùng.', 'images/43.jpg', 'Việt Nam', '2017-12-26 10:00:00', 64, 0),
 (44, 'Máy tính bảng Samsung Galaxy Tab E 9.6 (SM-T561)', 3, 1, 4490000, 100, 'Samsung Galaxy Tab E 9.6 là một sự lựa chọn cho bạn thích một chiếc máy có màn hình lớn để giải trí thoải mái hơn nhưng cấu hình không quá thấp.', 'images/44.jpg', 'Việt Nam', '2017-12-26 10:00:00', 94, 0),
@@ -218,7 +218,7 @@ INSERT INTO `san_pham` (`id`, `tensp`, `loai`, `id_nsx`, `gia`, `soluong`, `mota
 (48, 'Máy tính bảng iPad Wifi Cellular 32GB (2017)', 3, 3, 12990000, 400, 'Dòng máy tính bảng iPad Wifi Cellular 32GB (2017) mới của Apple sở hữu cho mình cấu hình mạnh mẽ cùng mức giá bán rất hấp dẫn.', 'images/48.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1434, 0),
 (49, 'Máy tính bảng iPad Mini 4 Wifi 128GB', 3, 3, 10990000, 400, 'iPad Mini 4 Wifi 128GB cho bạn thêm sự lựa chọn với bộ nhớ trong dung lượng lớn thoải mái cài đặt game và ứng dụng.', 'images/49.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1434, 0),
 (50, 'Máy tính bảng iPad Wifi 32GB (2017)', 3, 3, 8990000, 400, 'iPad Wifi 32GB (2017) là một bản nâng cấp nhẹ của chiếc iPad Air 2 đã ra mắt từ năm 2014 với một số thay đổi về ngoại hình và cấu hình được nâng cấp mạnh mẽ hơn.', 'images/50.jpg', 'Việt Nam', '2017-12-26 10:00:00', 1434, 0),
-(51, 'DELL 15.6″ dòng Inspiron 5570', 2, 5, 15000000, 100, 'Dell inspiron 15 là dòng laptop thời trang cao cấp trong series 5000 của Dell với điểm nổi bật là thiết kế nhôm nguyên khối mỏng nhẹ cực kỳ sang trọng. Điểm xuyến giữa phần nắp màn hình là logo Dell màu đen sang trọng, bàn phím và touchpad đều được viền một lớp khung đánh bóng. Inspiron 5570 mang phong cách hiện đại với cấu hình mạnh mẽ với trọng lượng không quá 2kg. Đây được coi là chiếc máy tính lí tưởng cho các doanh nhân hoặc người dùng thường xuyên di chuyển. Chiếc máy cho âm thanh chất lượng cao bằng công nghệ Waves MaxxAudio® của Dell ', 'images/Dell/1.jpg', 'Việt Nam', NULL, 13, 5),
+(51, 'DELL 15.6″ dòng Inspiron 5570', 2, 5, 15000000, 100, 'Dell inspiron 15 là dòng laptop thời trang cao cấp trong series 5000 của Dell với điểm nổi bật là thiết kế nhôm nguyên khối mỏng nhẹ cực kỳ sang trọng. Điểm xuyến giữa phần nắp màn hình là logo Dell màu đen sang trọng, bàn phím và touchpad đều được viền một lớp khung đánh bóng. Inspiron 5570 mang phong cách hiện đại với cấu hình mạnh mẽ với trọng lượng không quá 2kg. Đây được coi là chiếc máy tính lí tưởng cho các doanh nhân hoặc người dùng thường xuyên di chuyển. Chiếc máy cho âm thanh chất lượng cao bằng công nghệ Waves MaxxAudio® của Dell ', 'images/Dell/1.jpg', 'Việt Nam', NULL, 10, 5),
 (52, 'DELL 15.6 inch dòng INSPIRON 5577', 2, 5, 18890000, 100, 'Dell N5577 sở hữu một vẻ ngoài đặc trưng của dòng laptop Gaming với tông màu đen chủ đạo kết hợp cùng các đường viền màu đỏ nổi bật và rất nhiều quạt tản nhiệt trên thân máy tạo nên một phong cách rất riêng. Máy được hoàn thiện bằng chất liệu nhựa, mặt lưng được làm ở dạng sần vừa toát lên sự sang trọng vừa cho người dùng cảm giác cầm chắc chắn hơn.', 'images/Dell/2.jpg', 'Việt Nam', NULL, 6, 6),
 (53, 'DELL 15 inch dòng XPS 2017 -9560', 2, 5, 40990000, 100, 'XPS 15 9560 là phiên bản mới nhất trong dòng máy tính giải trí di động XPS với thiết kế hiện đại, màn hình cảm ứng độ phân giải FHD cùng cấu hình phần cứng mạnh. Máy có thiết kế tinh tế, kiểu dáng mỏng nhẹ cùng chất liệu sợi carbon và hợp kim nhôm nên máy khá nhẹ đồng thời vẫn tạo được sự chắc chắn, độ bền cao. Chiếc máy cho âm thanh chất lượng cao bằng công nghệ Waves MaxxAudio® Pro của Del', 'images/Dell/3.jpg', 'Việt Nam', NULL, 7, 7),
 (54, 'DELL 17.3 inch dòng New Alienware 17', 2, 5, 41790000, 100, 'New Alienware 17 là phiên bản mới nhất trong dòng máy tính Gaming của dell với thiết kế hiện đại, màn hình cảm ứng độ phân giải FHD cùng cấu hình phần cứng cực mạnh. Máy có thiết kế tinh tế, kiểu dáng cực pro cùng chất liệu sợi carbon và hợp kim nhôm nên máy khá nhẹ đồng thời vẫn tạo được sự chắc chắn, độ bền cao. Chiếc máy cho âm thanh chất lượng cao bằng công nghệ Waves MaxxAudio® Pro của Dell', 'images/Dell/4.jpg', 'Việt Nam', NULL, 8, 8),
@@ -242,7 +242,7 @@ INSERT INTO `san_pham` (`id`, `tensp`, `loai`, `id_nsx`, `gia`, `soluong`, `mota
 (72, 'Laptop Apple Macbook Pro MPXR2SA/A i5 2.3GHz/8GB/128GB (2017)', 2, 3, 33990000, 200, 'Apple Macbook Pro MPXR2SA/A i5 là dòng sản phẩm cao cấp với thiết kế kim loại nguyên khối, chip i5 thế hệ thứ 7 và dùng ổ SSD dung lượng 128 GB mang đến sự bền bỉ và mạnh mẽ khi sử dụng.', 'images/Apple/2.jpg', 'Việt Nam', '2017-12-26 03:00:00', 1234, 0),
 (73, 'Laptop Apple Macbook 12\" MMGM2 Core M 1.2GHz/8GB/512GB (2016)', 2, 3, 36990000, 200, 'Apple Macbook 12 inch MMGM2 là phiên bản 2016 được nâng cấp đôi chút so với bản 2015, có RAM lớn, ổ SSD tốc độ cao, chip xử lý mới và tốt.', 'images/Apple/3.jpg', 'Việt Nam', '2017-12-26 03:00:00', 1234, 0),
 (74, 'Laptop Apple Macbook 12\" MLHF2 Core M 1.2GHz/8GB/512GB (2016)', 2, 3, 36990000, 200, 'Vẫn duy trì thiết kế cực kỳ quyến rũ của mình Apple Macbook 12 inch năm 2016 được cải tiến thêm về hiệu năng với chip xử lý Core M của Intel đem đến hiệu năng vượt trội hơn.', 'images/Apple/4.jpg', 'Việt Nam', '2017-12-26 03:00:00', 1234, 0),
-(75, 'Laptop Apple Macbook Pro Touch MLH32SA/A i7 2.6GHz/16GB/256GB (2016)', 2, 3, 56990000, 200, 'MacBook Pro 2016 là “khủng long xinh đẹp” trong thế giới laptop, đặc biệt là sự xuất hiện của thanh Touch Bar – là một dải cảm ứng cho phép truy cập nhanh công cụ. ', 'images/Apple/5.jpg', 'Việt Nam', '2017-12-26 03:00:00', 1235, 0);
+(75, 'Laptop Apple Macbook Pro Touch MLH32SA/A i7 2.6GHz/16GB/256GB (2016)', 2, 3, 56990000, 200, 'MacBook Pro 2016 là “khủng long xinh đẹp” trong thế giới laptop, đặc biệt là sự xuất hiện của thanh Touch Bar – là một dải cảm ứng cho phép truy cập nhanh công cụ. ', 'images/Apple/5.jpg', 'Việt Nam', '2017-12-26 03:00:00', 1234, 0);
 
 -- --------------------------------------------------------
 
@@ -250,14 +250,16 @@ INSERT INTO `san_pham` (`id`, `tensp`, `loai`, `id_nsx`, `gia`, `soluong`, `mota
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
-  `id` int(11) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `fullname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `type` int(255) DEFAULT NULL,
-  `phone` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `phone` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `users`
@@ -267,106 +269,7 @@ INSERT INTO `users` (`id`, `fullname`, `email`, `password`, `type`, `phone`) VAL
 (1, 'admin', 'admin@gmailcom', '$2y$11$hQSVhxhIWPJz91GMB2FGie7Yjt9hpTDN8aAOZosb7ns8JmSGxkJe', 1, NULL),
 (2, 'Khoa huynh', 'yumiling1001@gmailcom', '$2y$11$hQSVhxhIWPJz91GMB2FGie7Yjt9hpTDN8aAOZosb7ns8JmSGxkJe', NULL, NULL),
 (3, 'khanh', 'khanhthangngulol@gmail.com', '$2y$10$gP0faF7xtpIeurNtCw.JPeSVTMWrfAjeh7z/u.WHM7j/UiE3ecdPW', NULL, '0'),
-(4, 'khanhvo1', 'khanhthangngulol1@gmail.com', '$2y$10$Zs3586jvp5BbTxKjcMly8.y0.TtcjOa/mPDa0hzmpaE1AtUI/hwcS', NULL, '01649502951'),
-(5, 'buidangkhoa', 'billythekid15810@gmail.com', 'buidangkhoa', 0, '0123456789');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `chi_tiet_don_hang`
---
-ALTER TABLE `chi_tiet_don_hang`
-  ADD PRIMARY KEY (`id_donhang`,`id_sanpham`) USING BTREE,
-  ADD KEY `id_sanpham` (`id_sanpham`);
-
---
--- Indexes for table `don_hang`
---
-ALTER TABLE `don_hang`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_nguoidung` (`id_nguoidung`);
-
---
--- Indexes for table `gio_hang`
---
-ALTER TABLE `gio_hang`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_nguoidung` (`id_nguoidung`),
-  ADD KEY `id_sanpham` (`id_sanpham`);
-
---
--- Indexes for table `loai_san_pham`
---
-ALTER TABLE `loai_san_pham`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `nha_san_xuat`
---
-ALTER TABLE `nha_san_xuat`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `san_pham`
---
-ALTER TABLE `san_pham`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `loai` (`loai`),
-  ADD KEY `id_nsx` (`id_nsx`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `chi_tiet_don_hang`
---
-ALTER TABLE `chi_tiet_don_hang`
-  MODIFY `id_donhang` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `don_hang`
---
-ALTER TABLE `don_hang`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `gio_hang`
---
-ALTER TABLE `gio_hang`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
-
---
--- AUTO_INCREMENT for table `loai_san_pham`
---
-ALTER TABLE `loai_san_pham`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `nha_san_xuat`
---
-ALTER TABLE `nha_san_xuat`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `san_pham`
---
-ALTER TABLE `san_pham`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+(4, 'khanhvo1', 'khanhthangngulol1@gmail.com', '$2y$10$Zs3586jvp5BbTxKjcMly8.y0.TtcjOa/mPDa0hzmpaE1AtUI/hwcS', NULL, '01649502951');
 
 --
 -- Constraints for dumped tables
