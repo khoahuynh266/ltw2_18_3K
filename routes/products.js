@@ -33,6 +33,8 @@ router.get('/products/totalPage/', products.getTotalPage);
 
 router.get('/products/Producer/:id_nsx', products.getProductsByProducer)
 
+router.get('/products/ProductType/:id_type', products.getProductsByProductType)
+
 //lấy 5 sp theo nsx
 router.get('/products/5productSamProducer/:producerID', products.productSamProducer);
 //lấy 5 sp theo loại

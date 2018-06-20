@@ -18,6 +18,10 @@ exports.getProductsByProducer = function (id_nsx,callback) {
     db.executeQuery("SELECT * FROM `san_pham` WHERE id_nsx = ?",id_nsx, callback);
 }
 
+exports.getProductsByProductType = function (id_type,callback) {
+    db.executeQuery("SELECT * FROM `san_pham` WHERE loai = ?",id_type, callback);
+}
+
 exports.delete = function (productId,callback) {
     db.executeQuery("DELETE FROM `ban_hang`.`san_pham` WHERE id = ? ",productId, callback);
 }
